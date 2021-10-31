@@ -22,12 +22,9 @@ SUPPRESS_WARN_END
 // --------------------------------------------------------------------------------------------------------------------
 class Main final // To ultimately become the co-ordinator if deemed necessary
 {
-    constexpr static
-    std::size_t stack_size{2048};
-    constexpr static
-    const char* const name{"MAIN"}, *const tag{name};
-    constexpr static
-    TickType_t loop_delay{pdSECOND};
+    constexpr static std::size_t stack_size{2048};
+    constexpr static const char *const name{"MAIN"}, *const tag{name};
+    constexpr static TickType_t loop_delay{pdSECOND};
 
 public:
     constexpr Main(void) noexcept {}
@@ -37,32 +34,28 @@ public:
         if (not h_task)
         {
             h_task = xTaskCreateStatic(
-                      task,
-                      name,
-                      stack_size,
-                      this,
-                      5,
-                      stack,
-                      &task_tcb);
+                task,
+                name,
+                stack_size,
+                this,
+                5,
+                stack,
+                &task_tcb);
             if (h_task)
                 return ESP_OK;
             return ESP_ERR_NO_MEM;
         }
-        return
-            ESP_ERR_INVALID_STATE;
+        return ESP_ERR_INVALID_STATE;
     }
 
 private:
-    [[nodiscard]] static
-    bool setup(Main& main);
+    [[nodiscard]] static bool setup(Main &main);
 
-    static
-    void loop(Main& main);
+    static void loop(Main &main);
 
-    [[noreturn,gnu::nonnull]] static
-    void task(void* p_main)
+    [[noreturn, gnu::nonnull]] static void task(void *p_main)
     {
-        Main& main{*reinterpret_cast<Main*>(p_main)};
+        Main &main{*reinterpret_cast<Main *>(p_main)};
 
         while (not setup(main))
             vTaskDelay(pdSECOND);
@@ -74,16 +67,15 @@ private:
         }
     }
 
-    [[nodiscard]] static
-    esp_err_t start_all_tasks(void);
+    [[nodiscard]] static esp_err_t start_all_tasks(void);
 
     static StaticTask_t task_tcb;
-    static StackType_t  stack[stack_size];
+    static StackType_t stack[stack_size];
     static TaskHandle_t h_task;
 }; // class Main
 
 inline StaticTask_t Main::task_tcb{};
-inline StackType_t  Main::stack[stack_size]{};
+inline StackType_t Main::stack[stack_size]{};
 inline TaskHandle_t Main::h_task{nullptr};
 
 // --------------------------------------------------------------------------------------------------------------------

@@ -28,7 +28,11 @@ extern "C" void app_main(void)
 // --------------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------------
+<<<<<<< HEAD
 bool Main::setup(Main &main)
+=======
+bool Main::setup(Main &main)
+>>>>>>> release/hello_world
 {
     esp_err_t status{ESP_OK};
 
