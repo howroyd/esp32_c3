@@ -14,6 +14,7 @@ SUPPRESS_WARN_BEGIN
 #define pdMAX 0xffffffffUL
 
 #include "esp_err.h"
+#include "esp_system.h"
 #include "esp_event.h"
 #include "nvs_flash.h"
 SUPPRESS_WARN_END
